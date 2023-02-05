@@ -16,16 +16,17 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.DriveSubsystem;
+
 import java.util.List;
 
 /*
@@ -38,12 +39,11 @@ public class RobotContainer {
     // The robot's subsystems
 
     private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-
-    // The driver's controller
-    XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
     private final SlewRateLimiter m_xspeedLimiter = new SlewRateLimiter(3);
     private final SlewRateLimiter m_yspeedLimiter = new SlewRateLimiter(3);
     private final SlewRateLimiter m_rotLimiter = new SlewRateLimiter(3);
+    // The driver's controller
+    XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and
@@ -67,7 +67,7 @@ public class RobotContainer {
                                 -m_yspeedLimiter.calculate(MathUtil.applyDeadband(m_driverController.getLeftX(), 0.02)),
                                 //MathUtil.applyDeadband(-m_driverController.getRightX() * Math.abs(m_driverController.getRightX()), 0.06),
                                 -m_rotLimiter.calculate(MathUtil.applyDeadband(m_driverController.getRightX(), 0.02)),
-                                (m_driverController.getLeftBumper() ? false : true)),
+                                (!m_driverController.getLeftBumper())),
                         m_robotDrive));
     }
 
@@ -123,7 +123,7 @@ public class RobotContainer {
                 m_robotDrive::setModuleStates,
                 m_robotDrive);
 
-        // Reset odometry to the starting pose of the trajectory.
+        // Reset odometer to the starting pose of the trajectory.
         m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
         // Run path following command, then stop at the end.

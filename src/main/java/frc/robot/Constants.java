@@ -4,7 +4,6 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -79,22 +78,18 @@ public final class Constants {
         public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
         public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
                 / kDrivingMotorReduction;
-
+        public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
         public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
                 / kDrivingMotorReduction; // meters
         public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
                 / kDrivingMotorReduction) / 60.0; // meters per second
-
         public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
         public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
-
         public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
         public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
-
         public static final double kDrivingP = 0.04;
         public static final double kDrivingI = 0;
         public static final double kDrivingD = 0;
-        public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
         public static final double kDrivingMinOutput = -1;
         public static final double kDrivingMaxOutput = 1;
 
